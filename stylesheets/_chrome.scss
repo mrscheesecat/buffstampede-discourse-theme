@@ -301,6 +301,20 @@
 // ── The sections inside Discourse's hamburger panel ───────────────────────
 // Mirrors the site's mobile menu: #1c1c1c ground, gold rules top and bottom,
 // accordions for the sections that have children, socials at the bottom.
+// `before-sidebar-sections` feeds two places: the hamburger dropdown and the
+// persistent sidebar. The persistent sidebar is what the admin area uses, so
+// without this the site's sections stacked on top of the admin navigation. The
+// sections belong in the hamburger only, so the block is hidden by default and
+// shown only inside `.hamburger-panel`, which is the wrapper Discourse puts
+// around the dropdown version.
+.bs-mobile-nav {
+  display: none;
+}
+
+.hamburger-panel .bs-mobile-nav {
+  display: block;
+}
+
 .bs-mobile-nav {
   background: $bs-mobile-menu-bg;
   border-top: 2px solid $bs-gold;
