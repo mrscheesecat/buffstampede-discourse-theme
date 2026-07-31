@@ -335,18 +335,29 @@
     }
   }
 
+  // The accordion rows are <summary>, not <a>, so they need their own colour.
+  // Scoping the anchor rule to `a` alone left these three inheriting
+  // Discourse's --primary, which is near-black against this panel.
   &__summary {
+    color: rgba(255, 255, 255, 0.9);
     list-style: none;
 
-    // Suppress the default disclosure triangle so the site's caret is the only
-    // marker. `list-style: none` alone is not enough: Chrome kept drawing a
-    // triangle beside every section, so the ::marker and the older WebKit
-    // pseudo-element are both cleared.
+    // Suppress the default disclosure triangle so the site's right-hand caret
+    // is the only marker. Three declarations because three different things can
+    // draw it: the standard ::marker, WebKit's older details pseudo-element,
+    // and Discourse's own generated caret on summary elements, which is what
+    // was still showing as a solid triangle to the left of the label.
     &::marker {
       content: "";
     }
 
     &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before,
+    &::after {
+      content: none;
       display: none;
     }
   }
