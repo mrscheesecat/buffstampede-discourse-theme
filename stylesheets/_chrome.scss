@@ -59,9 +59,13 @@
       justify-content: center;
       width: 28px;
       height: 28px;
-      color: $bs-text-light;
       border-radius: 2px;
       transition: color 0.15s;
+
+      &,
+      &:visited {
+        color: $bs-text-light;
+      }
 
       &:hover,
       &:focus-visible {
@@ -85,7 +89,11 @@
       text-decoration: none;
       white-space: nowrap;
       padding: 0 12px;
-      color: $bs-text-light;
+
+      &,
+      &:visited {
+        color: $bs-text-light;
+      }
 
       &:first-child {
         padding-left: 0;
@@ -97,7 +105,11 @@
 
       &--primary {
         font-weight: 700;
-        color: $bs-gold;
+
+        &,
+        &:visited {
+          color: $bs-gold;
+        }
       }
 
       &:hover,
@@ -307,23 +319,43 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
+  }
+
+  // Scoped through the parent and stated for :visited as well. Discourse
+  // colours visited anchors with --primary, which is near-black in this
+  // palette, so a section the reader has already opened would otherwise turn
+  // invisible against the panel. The Board was the first casualty: it points
+  // at the forum root, which every reader has visited.
+  a#{&}__link {
+    &,
+    &:visited {
+      color: rgba(255, 255, 255, 0.9);
+    }
   }
 
   &__summary {
     list-style: none;
 
     // Suppress the default disclosure triangle so the site's caret is the only
-    // marker. Safari needs the -webkit- pseudo-element specifically.
+    // marker. `list-style: none` alone is not enough: Chrome kept drawing a
+    // triangle beside every section, so the ::marker and the older WebKit
+    // pseudo-element are both cleared.
+    &::marker {
+      content: "";
+    }
+
     &::-webkit-details-marker {
       display: none;
     }
   }
 
-  &__link--current {
-    color: $bs-gold;
+  a#{&}__link--current {
+    &,
+    &:visited {
+      color: $bs-gold;
+    }
   }
 
   &__caret {
@@ -349,8 +381,12 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.65);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &,
+    &:visited {
+      color: rgba(255, 255, 255, 0.65);
+    }
 
     &:hover,
     &:focus-visible {
@@ -372,7 +408,11 @@
       justify-content: center;
       width: 36px;
       height: 36px;
-      color: rgba(255, 255, 255, 0.5);
+
+      &,
+      &:visited {
+        color: rgba(255, 255, 255, 0.5);
+      }
 
       &:hover,
       &:focus-visible {
