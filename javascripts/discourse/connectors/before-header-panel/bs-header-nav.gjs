@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import { parseNavLinks } from "../../lib/bs-links";
+import { navItems } from "../../lib/bs-nav-config";
 
 // The site's section nav, rendered inside Discourse's own header between the
 // logo and the search / notifications / avatar icons.
@@ -12,11 +12,16 @@ import { parseNavLinks } from "../../lib/bs-links";
 // This was first written against `home-logo__after`. That outlet also sits in
 // the right place visually, but it renders inside `.home-logo-wrapper-outlet`,
 // which Discourse gives `overflow: hidden` so oversized logos can be clipped.
-// A nav inside a clipping box sized for a logo is a bug waiting to happen, so
-// the nav lives outside it.
+// A nav inside a clipping box would clip the dropdowns, so the nav lives
+// outside it.
+//
+// Dropdowns open on hover and on keyboard focus, in CSS, exactly as
+// components/Nav.jsx does it on the site. Below 680px this whole nav is hidden
+// and the sections move into Discourse's hamburger panel — again matching the
+// site, which swaps to a hamburger at the same breakpoint.
 export default class BsHeaderNav extends Component {
-  get links() {
-    return parseNavLinks(settings.site_nav_links);
+  get items() {
+    return navItems();
   }
 
   // Inside a topic, Discourse docks the topic title into the header. The title
@@ -31,14 +36,45 @@ export default class BsHeaderNav extends Component {
   <template>
     {{#unless this.hidden}}
       <nav class="bs-nav" aria-label="BuffStampede sections">
-        {{#each this.links as |link|}}
-          <a
-            class="bs-nav__link
-              {{if link.internal 'bs-nav__link--current'}}"
-            href={{link.url}}
+        {{#each this.items as |item|}}
+          <div
+            class="bs-nav__group
+              {{if item.current 'bs-nav__group--current'}}"
           >
-            <span class="bs-nav__label">{{link.label}}</span>
-          </a>
+            <a
+              class="bs-nav__link
+                {{if item.current 'bs-nav__link--current'}}"
+              href={{item.url}}
+            >
+              <span class="bs-nav__label">{{item.label}}</span>
+              {{#if item.children}}
+                <svg
+                  class="bs-nav__caret"
+                  width="8"
+                  height="5"
+                  viewBox="0 0 8 5"
+                  fill="none"
+                  aria-hidden="true"
+                ><path
+                    d="M1 1l3 3 3-3"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg>
+              {{/if}}
+            </a>
+
+            {{#if item.children}}
+              <div class="bs-nav__dropdown">
+                {{#each item.children as |child|}}
+                  <a class="bs-nav__dropdown-link" href={{child.url}}>
+                    {{child.label}}
+                  </a>
+                {{/each}}
+              </div>
+            {{/if}}
+          </div>
         {{/each}}
       </nav>
     {{/unless}}

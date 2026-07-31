@@ -1,7 +1,11 @@
 @import "tokens";
 
+// Every measurement in this file is taken from the site's own components:
+// TopBar.jsx, Masthead.jsx and Nav.jsx. If one of those changes, change the
+// matching value here — they are meant to be read side by side.
+
 // ── Shared band container ─────────────────────────────────────────────────
-// Every band lines up on the same 1240px column as the site's nav and footer.
+// maxWidth 1240, padding 0 20px, from all three components.
 .bs-band {
   box-sizing: border-box;
   max-width: #{$container_width}px;
@@ -10,9 +14,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &--center {
+    justify-content: center;
+  }
 }
 
 // ── Band 1: top bar ───────────────────────────────────────────────────────
+// TopBar.jsx: background #1a1a1a, borderBottom 1px #2a2a2a, height 36px.
 .bs-topbar {
   background: $bs-topbar-bg;
   border-bottom: 1px solid $bs-topbar-rule;
@@ -22,6 +31,7 @@
   }
 
   &__date {
+    margin: 0;
     font-family: $bs-font-ui;
     font-size: 0.6rem;
     font-weight: 500;
@@ -30,17 +40,25 @@
     white-space: nowrap;
   }
 
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+
+  // Icons 28px wide, 2px apart, then a 16px gap and a divider rule.
   &__socials {
     display: flex;
     align-items: center;
     gap: 2px;
+    padding-right: 16px;
+    border-right: 1px solid $bs-topbar-divider;
 
     a {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       color: $bs-text-light;
       border-radius: 2px;
       transition: color 0.15s;
@@ -51,24 +69,63 @@
       }
     }
   }
+
+  // AuthButtons.jsx: 0.58rem, uppercase, 0.1em tracking, divided by a rule.
+  &__auth {
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+
+    &-link {
+      font-family: $bs-font-ui;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 0 12px;
+      color: $bs-text-light;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid $bs-topbar-divider;
+      }
+
+      &--primary {
+        font-weight: 700;
+        color: $bs-gold;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold-hover;
+      }
+    }
+  }
 }
 
 // ── Band 2: masthead ──────────────────────────────────────────────────────
+// Masthead.jsx: background #111111, minHeight 72px, logo height 56px.
+//
+// Never do arithmetic on a theme setting: Discourse hands settings to SCSS as
+// unquoted strings, so `$masthead_logo_height + 16` concatenated into "5616"
+// and produced a 5616px tall band with the wordmark floating in the middle.
+// Both values below are plain interpolations.
 .bs-masthead {
   background: $bs-black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  // Never do arithmetic on a theme setting. Discourse hands settings to SCSS as
-  // unquoted strings, so `$masthead_logo_height + 16` concatenates into "5616"
-  // rather than adding, which produced a 5616px tall band with the wordmark
-  // floating in the middle of it. The band is sized by its padding and the
-  // image instead, so there is no arithmetic to get wrong.
-  padding: 8px $bs-pad-x;
+
+  .bs-band {
+    min-height: 72px;
+  }
 
   &__link {
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
 
   img {
@@ -100,30 +157,53 @@
     margin: 0 auto;
     padding: 0 $bs-pad-x;
   }
+
+  // The dropdowns hang below the header, so nothing between them and the
+  // header may clip. Discourse does not set overflow here, but its contents
+  // row is a flex container and browsers are inconsistent, so be explicit.
+  > .wrap,
+  .contents {
+    overflow: visible;
+  }
 }
 
-// The section links. Gold underline marks the section you are in, matching
-// components/Nav.jsx on the site.
+// Until a wordmark is uploaded to the Logo site setting, Discourse renders the
+// site title as text here. Style it so the interim state is not jarring.
+.d-header #site-text-logo {
+  font-family: $bs-font-display;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $bs-white;
+}
+
+// ── The nav row ───────────────────────────────────────────────────────────
+// Nav.jsx: link padding 14px 22px 14px 0, 0.8rem, weight 600, 0.1em tracking,
+// uppercase, rgba(255,255,255,0.85), 2px gold underline on the active group.
 .bs-nav {
   display: flex;
   align-items: stretch;
   align-self: stretch;
   flex: 1 1 auto;
   min-width: 0;
-  margin-left: 22px;
-  // Discourse's .panel is `margin-left: auto`, which already pushes the icons
-  // to the right edge. This sits between the logo and that panel.
   height: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
+  margin-left: 22px;
 
-  &::-webkit-scrollbar {
-    display: none;
+  &__group {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 2px solid transparent;
+
+    &--current {
+      border-bottom-color: $bs-gold;
+    }
   }
 
   &__link {
     display: flex;
     align-items: center;
+    gap: 4px;
     padding: 0 22px 0 0;
     font-family: $bs-font-ui;
     font-size: 0.8rem;
@@ -132,15 +212,13 @@
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    border-bottom: 2px solid transparent;
     transition: color 0.15s;
 
-    // Set on the anchor and inherited by the label span. Discourse styles
-    // header anchors through --header_primary, so state the colour explicitly
-    // rather than relying on inheritance from the header.
+    // Stated explicitly rather than inherited: Discourse colours header
+    // anchors through --header_primary.
     &,
     &:visited {
-      color: rgba(255, 255, 255, 0.85);
+      color: $bs-nav-link;
     }
 
     &:hover,
@@ -155,39 +233,177 @@
       &:focus-visible {
         color: $bs-gold;
       }
-
-      border-bottom-color: $bs-gold;
     }
   }
 
   &__label {
     color: inherit;
   }
+
+  &__caret {
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  // Nav.jsx: absolute, top 100%, minWidth 180px, 2px gold top border.
+  &__dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: $bs-black;
+    border-top: 2px solid $bs-gold;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    z-index: 200;
+  }
+
+  &__dropdown-link {
+    display: block;
+    padding: 10px 18px;
+    font-family: $bs-font-ui;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 1px solid $bs-nav-dropdown-rule;
+
+    &,
+    &:visited {
+      color: $bs-nav-dropdown-link;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $bs-gold;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }
 
-// Until a wordmark is uploaded to the Logo site setting, Discourse renders the
-// site title as text here. Style it so the interim state is not jarring.
-.d-header #site-text-logo {
-  font-family: $bs-font-display;
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: $bs-white;
+// ── The sections inside Discourse's hamburger panel ───────────────────────
+// Mirrors the site's mobile menu: #1c1c1c ground, gold rules top and bottom,
+// accordions for the sections that have children, socials at the bottom.
+.bs-mobile-nav {
+  background: $bs-mobile-menu-bg;
+  border-top: 2px solid $bs-gold;
+  border-bottom: 2px solid $bs-gold;
+  margin-bottom: 1em;
+
+  &__summary,
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    font-family: $bs-font-ui;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+
+  &__summary {
+    list-style: none;
+
+    // Suppress the default disclosure triangle so the site's caret is the only
+    // marker. Safari needs the -webkit- pseudo-element specifically.
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__link--current {
+    color: $bs-gold;
+  }
+
+  &__caret {
+    opacity: 0.5;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  &__group[open] &__caret {
+    transform: rotate(180deg);
+  }
+
+  &__children {
+    background: $bs-mobile-submenu-bg;
+  }
+
+  &__child {
+    display: block;
+    padding: 12px 36px;
+    font-family: $bs-font-ui;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.65);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:hover,
+    &:focus-visible {
+      color: $bs-gold;
+    }
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      color: rgba(255, 255, 255, 0.5);
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold;
+      }
+    }
+  }
 }
 
 // ── Narrow screens ────────────────────────────────────────────────────────
-// Liz QAs on her phone first, so the bands are sized for a 320px viewport up.
-@media (max-width: 768px) {
+// 680px is the site's breakpoint, in Nav.jsx and TopBar.jsx. At that width the
+// site hides the nav row and the top bar socials and moves the sections into a
+// hamburger. Discourse already has a hamburger in the same position, so the
+// nav row simply steps aside and .bs-mobile-nav takes over inside that panel.
+// This also guarantees the section links can never crowd the header icons on a
+// phone, because they are not in the header at all.
+@media (max-width: 680px) {
   .bs-topbar__socials {
     display: none;
   }
 
-  .bs-masthead {
-    min-height: 56px;
+  .bs-nav {
+    display: none;
+  }
 
-    img {
-      height: 38px;
-    }
+  .bs-masthead .bs-band {
+    min-height: 56px;
+  }
+
+  .bs-masthead img {
+    height: 38px;
   }
 
   .d-header {
@@ -197,21 +413,42 @@
       padding: 0 12px;
     }
   }
+}
 
+// Above the site's breakpoint but too narrow for six sections plus the header
+// icons, the nav scrolls sideways within itself rather than pushing the icons
+// off the edge. A scroll container cannot show an overflowing dropdown, so the
+// hover menus are only enabled above that width — which is why the rule that
+// opens them lives in its own media query rather than being overridden here.
+// Between these widths the parent link still goes to the section page, and the
+// full menu is one tap away in the hamburger.
+@media (min-width: 681px) and (max-width: 1100px) {
   .bs-nav {
-    margin-left: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
 
-    &__link {
-      padding-right: 16px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
+    &::-webkit-scrollbar {
+      display: none;
     }
+
+    &__caret {
+      display: none;
+    }
+  }
+}
+
+// Hover matches the site. `:focus-within` is added so the dropdowns are also
+// reachable by keyboard, which the site's hover-only version is not.
+@media (min-width: 1101px) {
+  .bs-nav__group:hover > .bs-nav__dropdown,
+  .bs-nav__group:focus-within > .bs-nav__dropdown {
+    display: block;
   }
 }
 
 // ── Footer ────────────────────────────────────────────────────────────────
 // Discourse's attribution stays, styled down to a quiet line rather than the
-// floating pill it renders as by default against a dark theme.
+// floating pill it renders as by default.
 .powered-by-discourse {
   font-family: $bs-font-ui;
   font-size: 0.7rem;

@@ -7,8 +7,8 @@ import { eq } from "discourse/truth-helpers";
 const BsSocialIcon = <template>
   {{#if (eq @icon "youtube")}}
     <svg
-      width="14"
-      height="14"
+      width="16"
+      height="16"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -17,8 +17,8 @@ const BsSocialIcon = <template>
       /></svg>
   {{else if (eq @icon "x")}}
     <svg
-      width="13"
-      height="13"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -27,8 +27,8 @@ const BsSocialIcon = <template>
       /></svg>
   {{else if (eq @icon "instagram")}}
     <svg
-      width="13"
-      height="13"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -37,8 +37,8 @@ const BsSocialIcon = <template>
       /></svg>
   {{else if (eq @icon "facebook")}}
     <svg
-      width="13"
-      height="13"
+      width="15"
+      height="15"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"

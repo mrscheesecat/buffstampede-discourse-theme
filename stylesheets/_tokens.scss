@@ -20,6 +20,14 @@ $bs-text-light: #a0a09c;
 // so the bar reads as a distinct band against the masthead.
 $bs-topbar-bg: #1a1a1a;
 $bs-topbar-rule: #2a2a2a;
+$bs-topbar-divider: #2e2e2e;
+
+// Nav row and dropdown, from components/Nav.jsx.
+$bs-nav-link: rgba(255, 255, 255, 0.85);
+$bs-nav-dropdown-link: rgba(255, 255, 255, 0.75);
+$bs-nav-dropdown-rule: rgba(255, 255, 255, 0.07);
+$bs-mobile-menu-bg: #1c1c1c;
+$bs-mobile-submenu-bg: #141414;
 
 $bs-font-ui: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 $bs-font-display: "Inter Tight", Arial, sans-serif;

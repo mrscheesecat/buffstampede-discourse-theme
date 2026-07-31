@@ -17,6 +17,13 @@ show_topbar_date:
   type: bool
   default: true
 
+# Shows Login / Join Free, or My Account once signed in, matching the site's
+# AuthButtons. The site renders the Clerk avatar here too; Clerk cannot run
+# inside Discourse, and Discourse's own avatar menu already covers it.
+show_topbar_auth_links:
+  type: bool
+  default: true
+
 # One entry per line. Format: Label,https://url,icon
 # icon must be one of: youtube, x, instagram, facebook
 topbar_socials:
@@ -40,14 +47,9 @@ masthead_logo_height:
   max: 120
 
 # ── Band 3: the sticky nav row (rendered inside Discourse's own header) ───
-# One entry per line. Format: Label,url
-# A url starting with "/" is treated as a link inside the forum and is
-# highlighted in gold, the way the site highlights the current section.
-site_nav_links:
-  type: list
-  list_type: simple
-  default: "Football,https://www.buffstampede.com/football|Men's Basketball,https://www.buffstampede.com/mens-basketball|BuffStampede Radio,https://www.buffstampede.com/buffstampede-radio|The Board,/|Support,https://www.buffstampede.com/support|About,https://www.buffstampede.com/about"
-
+# The section links and their dropdowns are a nested tree, which a flat setting
+# cannot express, so they live in javascripts/discourse/lib/bs-nav-config.js.
+# That file mirrors NAV_ITEMS in components/Nav.jsx in the site repo.
 # Discourse puts the topic title in the header once you scroll into a topic.
 # With this on, the nav links step aside on topic pages so the title has room.
 hide_nav_on_topic_pages:

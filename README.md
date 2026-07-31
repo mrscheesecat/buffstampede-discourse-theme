@@ -61,9 +61,11 @@ stylesheets/_chrome.scss   the three header bands and the footer
 stylesheets/_lists.scss    list controls, topic list, categories, topic page
 javascripts/discourse/
   lib/bs-links.js                              parses the pipe-delimited settings
+  lib/bs-nav-config.js                         the nav tree, mirroring Nav.jsx
   components/bs-social-icon.gjs                the four brand marks
   connectors/above-site-header/…               bands 1 and 2
-  connectors/home-logo__after/…                the section nav inside the header
+  connectors/before-header-panel/…             the section nav inside the header
+  connectors/before-sidebar-sections/…         the sections in the hamburger panel
   api-initializers/bs-board.gjs                sends the header logo to the main site
 ```
 
@@ -72,10 +74,20 @@ javascripts/discourse/
 - **`above-site-header` plugin outlet** — declared in Discourse's `application.gjs`
   immediately before `<GlimmerSiteHeader>`. The supported place to put chrome that
   should scroll away above the sticky header.
-- **`home-logo__after` connector** — the `home-logo` plugin outlet is declared in
-  Discourse's header component; the `__after` suffix renders after its default
-  content. This makes the nav a real child of `.d-header .contents`, so it inherits
-  the header's flex layout and height instead of being positioned on top of it.
+- **`before-header-panel` outlet** — declared in Discourse's header contents
+  component immediately before `.panel`, which holds the icons. Since `.panel` is
+  `margin-left: auto`, this outlet naturally occupies the space between the logo
+  and the icons, and the nav becomes a real child of `.d-header .contents` that
+  inherits the header's flex layout and height. This was first built against
+  `home-logo__after`, which is in the right place visually but renders inside
+  `.home-logo-wrapper-outlet` — a box Discourse gives `overflow: hidden` so
+  oversized logos can be clipped. That clipped the nav, and would have clipped
+  the dropdowns.
+- **`before-sidebar-sections` outlet** — declared in Discourse's hamburger panel,
+  above its Categories and Tags links. Where the site's sections go on mobile.
+  Discourse closes the panel automatically when any `a[href]` inside it is
+  clicked, which is why the accordion parents are `<summary>` elements rather
+  than links.
 - **`home-logo-href` value transformer** — the supported way to change where the
   header logo points. Used so the logo goes to the main site, the way it does
   everywhere else on buffstampede.com. The forum home stays reachable through the
