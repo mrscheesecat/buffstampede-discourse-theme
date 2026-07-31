@@ -59,7 +59,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: #{$masthead_logo_height + 16}px;
+  // Never do arithmetic on a theme setting. Discourse hands settings to SCSS as
+  // unquoted strings, so `$masthead_logo_height + 16` concatenates into "5616"
+  // rather than adding, which produced a 5616px tall band with the wordmark
+  // floating in the middle of it. The band is sized by its padding and the
+  // image instead, so there is no arithmetic to get wrong.
   padding: 8px $bs-pad-x;
 
   &__link {
@@ -107,6 +111,9 @@
   flex: 1 1 auto;
   min-width: 0;
   margin-left: 22px;
+  // Discourse's .panel is `margin-left: auto`, which already pushes the icons
+  // to the right edge. This sits between the logo and that panel.
+  height: 100%;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -125,9 +132,16 @@
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    color: rgba(255, 255, 255, 0.85);
     border-bottom: 2px solid transparent;
     transition: color 0.15s;
+
+    // Set on the anchor and inherited by the label span. Discourse styles
+    // header anchors through --header_primary, so state the colour explicitly
+    // rather than relying on inheritance from the header.
+    &,
+    &:visited {
+      color: rgba(255, 255, 255, 0.85);
+    }
 
     &:hover,
     &:focus-visible {
@@ -135,15 +149,30 @@
     }
 
     &--current {
-      color: $bs-gold;
-      border-bottom-color: $bs-gold;
-
+      &,
+      &:visited,
       &:hover,
       &:focus-visible {
         color: $bs-gold;
       }
+
+      border-bottom-color: $bs-gold;
     }
   }
+
+  &__label {
+    color: inherit;
+  }
+}
+
+// Until a wordmark is uploaded to the Logo site setting, Discourse renders the
+// site title as text here. Style it so the interim state is not jarring.
+.d-header #site-text-logo {
+  font-family: $bs-font-display;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $bs-white;
 }
 
 // ── Narrow screens ────────────────────────────────────────────────────────
