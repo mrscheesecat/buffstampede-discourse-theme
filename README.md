@@ -107,9 +107,23 @@ They are recorded here so the pairing is not lost:
 | Logo small | the square BuffStampede mark | Shown when the header minimizes inside a topic |
 | Mobile logo | the square BuffStampede mark | Otherwise Discourse falls back to Logo at full width |
 | Navigation menu | Header Dropdown | The nav row is the navigation; a sidebar would duplicate it |
-| Welcome banner | disabled | The masthead is the welcome; the banner duplicates it |
 | Enable local logins | off | Clerk is the only identity |
 | Auth immediately | on | Sends readers straight to Clerk with no interstitial |
+
+The welcome banner is **not** in that list, because this theme owns it. `enable
+welcome banner` is a themeable site setting, meaning the value is stored per theme
+rather than globally, so switching the default theme brings the banner back even
+if it was switched off for the previous one. That is exactly what happened here.
+It is now declared in `about.json` under `theme_site_settings`, so it travels with
+the theme and a fresh install gets it right:
+
+```json
+"theme_site_settings": { "enable_welcome_banner": false }
+```
+
+The banner is off because the masthead already is the welcome, and because while
+the banner is showing Discourse hides the search icon in the header — so leaving
+it on silently costs the nav row its magnifying glass.
 
 ## Working on it
 
