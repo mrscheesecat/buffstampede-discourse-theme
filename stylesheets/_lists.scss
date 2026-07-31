@@ -1,0 +1,95 @@
+@import "tokens";
+
+// ── The row of list controls under the header ──────────────────────────────
+//
+// Latest / Hot / Categories, plus the category and tag pickers. In the old
+// theme these were left unstyled and inherited Discourse's bordered dropdown
+// buttons, which is the row of pills that looked stranded near the top of the
+// page. Treated here as a quiet tab strip on the site's off-white.
+.list-controls {
+  .nav-pills > li > a {
+    font-family: $bs-font-ui;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    color: $bs-muted;
+
+    &:hover {
+      background: transparent;
+      color: $bs-black;
+    }
+  }
+
+  .nav-pills > li.active > a,
+  .nav-pills > li > a.active {
+    background: transparent;
+    color: $bs-black;
+    border-bottom-color: $bs-gold;
+  }
+
+  // The category and tag pickers read as text with a caret, not as buttons.
+  .select-kit.combo-box .select-kit-header {
+    border-color: transparent;
+    background: transparent;
+    font-family: $bs-font-ui;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: $bs-muted;
+
+    &:hover,
+    &:focus-visible {
+      color: $bs-black;
+    }
+  }
+}
+
+// ── Topic list ────────────────────────────────────────────────────────────
+.topic-list {
+  .topic-list-item .link-top-line .title {
+    font-family: $bs-font-display;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .topic-list-item.visited .title {
+    color: $bs-muted;
+  }
+
+  .topic-list-header th {
+    font-family: $bs-font-ui;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $bs-muted;
+  }
+
+  img.avatar {
+    border-radius: 2px;
+  }
+}
+
+// ── Category boxes ────────────────────────────────────────────────────────
+// Square, with the gold rule the site uses on section headers.
+.category-box,
+.categories-boxes .category-box {
+  border-radius: 0;
+  border: 1px solid $bs-rule;
+  border-left: 3px solid $bs-gold;
+}
+
+// ── Topic page ────────────────────────────────────────────────────────────
+.topic-footer-main-buttons {
+  margin-top: 1.5em;
+  padding-top: 1.25em;
+  border-top: 1px solid $bs-rule;
+}
+
+.more-topics__container,
+#suggested-topics {
+  margin-top: 2.5em;
+  padding-top: 1.75em;
+  border-top: 1px solid $bs-rule;
+}

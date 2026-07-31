@@ -1,0 +1,196 @@
+@import "tokens";
+
+// ── Shared band container ─────────────────────────────────────────────────
+// Every band lines up on the same 1240px column as the site's nav and footer.
+.bs-band {
+  box-sizing: border-box;
+  max-width: #{$container_width}px;
+  margin: 0 auto;
+  padding: 0 $bs-pad-x;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ── Band 1: top bar ───────────────────────────────────────────────────────
+.bs-topbar {
+  background: $bs-topbar-bg;
+  border-bottom: 1px solid $bs-topbar-rule;
+
+  .bs-band {
+    height: 36px;
+  }
+
+  &__date {
+    font-family: $bs-font-ui;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: $bs-text-light;
+    white-space: nowrap;
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      color: $bs-text-light;
+      border-radius: 2px;
+      transition: color 0.15s;
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold;
+      }
+    }
+  }
+}
+
+// ── Band 2: masthead ──────────────────────────────────────────────────────
+.bs-masthead {
+  background: $bs-black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: #{$masthead_logo_height + 16}px;
+  padding: 8px $bs-pad-x;
+
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    display: block;
+    height: #{$masthead_logo_height}px;
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+// ── Band 3: Discourse's own header, dressed as the site's nav row ─────────
+//
+// Nothing here changes how the header is positioned. Discourse already sets
+// `.d-header-wrap { position: sticky; top: 0 }`, so the two bands above scroll
+// away and this row docks on its own. No `top`, no `position`, no z-index.
+.d-header {
+  height: 48px;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  // A small mark, not the full wordmark — the wordmark lives in the masthead.
+  .title {
+    --d-logo-height: 26px;
+  }
+
+  // Keep the header's contents on the same column as every other band.
+  > .wrap {
+    max-width: #{$container_width}px;
+    margin: 0 auto;
+    padding: 0 $bs-pad-x;
+  }
+}
+
+// The section links. Gold underline marks the section you are in, matching
+// components/Nav.jsx on the site.
+.bs-nav {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 0 22px 0 0;
+    font-family: $bs-font-ui;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.85);
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s;
+
+    &:hover,
+    &:focus-visible {
+      color: $bs-white;
+    }
+
+    &--current {
+      color: $bs-gold;
+      border-bottom-color: $bs-gold;
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold;
+      }
+    }
+  }
+}
+
+// ── Narrow screens ────────────────────────────────────────────────────────
+// Liz QAs on her phone first, so the bands are sized for a 320px viewport up.
+@media (max-width: 768px) {
+  .bs-topbar__socials {
+    display: none;
+  }
+
+  .bs-masthead {
+    min-height: 56px;
+
+    img {
+      height: 38px;
+    }
+  }
+
+  .d-header {
+    height: 44px;
+
+    > .wrap {
+      padding: 0 12px;
+    }
+  }
+
+  .bs-nav {
+    margin-left: 12px;
+
+    &__link {
+      padding-right: 16px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+    }
+  }
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────
+// Discourse's attribution stays, styled down to a quiet line rather than the
+// floating pill it renders as by default against a dark theme.
+.powered-by-discourse {
+  font-family: $bs-font-ui;
+  font-size: 0.7rem;
+
+  &__content {
+    background: transparent;
+    border: 1px solid $bs-rule;
+    border-radius: 2px;
+    color: $bs-muted;
+  }
+}

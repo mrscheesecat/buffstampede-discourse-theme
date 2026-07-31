@@ -1,0 +1,19 @@
+en:
+  bs_board:
+    nav_label: "BuffStampede sections"
+    topbar_label: "BuffStampede"
+    masthead_alt: "BuffStampede"
+  theme_metadata:
+    description: "Makes The Board look like the rest of buffstampede.com. Two bands of site chrome scroll away above Discourse's own header, which stays as the single sticky nav bar."
+    settings:
+      main_site_url: "Root URL of the main site. Used for the masthead logo link and, when enabled, the header logo link."
+      show_topbar: "Show the thin dark bar with the date and social links above the masthead."
+      show_topbar_date: "Show today's date on the left of the top bar, matching the main site."
+      topbar_socials: "Social links in the top bar. One per line, formatted Label,URL,icon where icon is youtube, x, instagram or facebook."
+      show_masthead: "Show the centered BuffStampede wordmark band. It scrolls away; the nav bar below it stays."
+      masthead_logo_url: "Image URL for the wordmark in the masthead band."
+      masthead_logo_height: "Height of the masthead wordmark in pixels."
+      site_nav_links: "Section links shown in the sticky nav bar. One per line, formatted Label,URL. A URL starting with / is treated as a link inside the forum and highlighted in gold."
+      hide_nav_on_topic_pages: "Discourse shows the topic title in the header inside a topic. Leave this on so the section links step aside and the title is readable."
+      container_width: "Maximum content width in pixels. 1240 matches the main site."
+      logo_links_to_main_site: "Send the header logo to the main site rather than the forum home page. The Board link in the nav returns to the forum home."

@@ -1,0 +1,68 @@
+# BuffStampede Board — theme settings
+#
+# Everything an editor is likely to change lives here so nobody has to touch
+# code to add a nav link or swap the logo. Values are read by the components
+# under javascripts/discourse/ and by stylesheets/_tokens.scss.
+
+main_site_url:
+  type: string
+  default: "https://www.buffstampede.com"
+
+# ── Band 1: the thin top bar ──────────────────────────────────────────────
+show_topbar:
+  type: bool
+  default: true
+
+show_topbar_date:
+  type: bool
+  default: true
+
+# One entry per line. Format: Label,https://url,icon
+# icon must be one of: youtube, x, instagram, facebook
+topbar_socials:
+  type: list
+  list_type: simple
+  default: "YouTube,https://www.youtube.com/@BuffStampedeDotCom,youtube|X,https://x.com/BuffStampedeCOM,x|Instagram,https://www.instagram.com/buffstampededotcom/,instagram|Facebook,https://www.facebook.com/BuffStampede,facebook"
+
+# ── Band 2: the masthead wordmark ─────────────────────────────────────────
+show_masthead:
+  type: bool
+  default: true
+
+masthead_logo_url:
+  type: string
+  default: "https://www.buffstampede.com/logo.svg"
+
+masthead_logo_height:
+  type: integer
+  default: 56
+  min: 24
+  max: 120
+
+# ── Band 3: the sticky nav row (rendered inside Discourse's own header) ───
+# One entry per line. Format: Label,url
+# A url starting with "/" is treated as a link inside the forum and is
+# highlighted in gold, the way the site highlights the current section.
+site_nav_links:
+  type: list
+  list_type: simple
+  default: "Football,https://www.buffstampede.com/football|Men's Basketball,https://www.buffstampede.com/mens-basketball|BuffStampede Radio,https://www.buffstampede.com/buffstampede-radio|The Board,/|Support,https://www.buffstampede.com/support|About,https://www.buffstampede.com/about"
+
+# Discourse puts the topic title in the header once you scroll into a topic.
+# With this on, the nav links step aside on topic pages so the title has room.
+hide_nav_on_topic_pages:
+  type: bool
+  default: true
+
+# ── Layout ────────────────────────────────────────────────────────────────
+container_width:
+  type: integer
+  default: 1240
+  min: 900
+  max: 1600
+
+# Send the header logo to the main site instead of the forum home page, so it
+# behaves the way the logo does on every other BuffStampede page.
+logo_links_to_main_site:
+  type: bool
+  default: true

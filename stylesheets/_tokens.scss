@@ -1,0 +1,29 @@
+// BuffStampede design tokens, mirrored from lib/tokens.js in the site repo.
+//
+// These are the only literal colours and font stacks in this theme. Everything
+// else refers to them, or to the Discourse colour palette declared in
+// about.json, which is what drives --header_background, --primary, --tertiary
+// and friends. Do not paste a hex value anywhere else in this repo.
+
+$bs-gold: #cfb87c;
+$bs-gold-hover: #b89f5e;
+$bs-black: #111111;
+$bs-white: #ffffff;
+$bs-off-white: #fafaf8;
+
+$bs-rule: #e0e0dc;
+$bs-body: #4a4a46;
+$bs-muted: #767672;
+$bs-text-light: #a0a09c;
+
+// The dark bands of chrome. #1a1a1a is the site's top bar, one step off black
+// so the bar reads as a distinct band against the masthead.
+$bs-topbar-bg: #1a1a1a;
+$bs-topbar-rule: #2a2a2a;
+
+$bs-font-ui: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+$bs-font-display: "Inter Tight", Arial, sans-serif;
+$bs-font-editorial: "Source Serif 4", Georgia, serif;
+
+// Matches LAYOUT.containerPadX on the site.
+$bs-pad-x: 20px;

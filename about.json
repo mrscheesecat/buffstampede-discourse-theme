@@ -1,0 +1,24 @@
+{
+  "name": "BuffStampede Board",
+  "component": false,
+  "about_url": "https://www.buffstampede.com",
+  "license_url": null,
+  "authors": "Authentic Media LLC",
+  "theme_version": "1.0.0",
+  "minimum_discourse_version": "3.4.0",
+  "assets": {},
+  "color_schemes": {
+    "BuffStampede": {
+      "primary": "111111",
+      "secondary": "FAFAF8",
+      "tertiary": "111111",
+      "quaternary": "CFB87C",
+      "header_background": "111111",
+      "header_primary": "FFFFFF",
+      "highlight": "CFB87C",
+      "danger": "8F393E",
+      "success": "2E7D32",
+      "love": "CFB87C"
+    }
+  }
+}

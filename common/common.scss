@@ -1,0 +1,15 @@
+// BuffStampede Board — Discourse theme
+//
+// Load order matters: tokens first, then the layer that sets Discourse's own
+// variables, then chrome, then list and topic surfaces.
+//
+// Rules of this repo:
+//   1. No literal hex value or font-family string outside _tokens.scss.
+//   2. No `position`, `top`, or fixed pixel offset on .d-header or its wrapper.
+//      Discourse's header is already sticky. Overriding it is what broke the
+//      previous theme.
+//   3. No `!important` unless a comment says which Discourse rule requires it.
+
+@import "../stylesheets/base";
+@import "../stylesheets/chrome";
+@import "../stylesheets/lists";

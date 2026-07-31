@@ -1,0 +1,83 @@
+@import "tokens";
+
+// ── Typography and width, set once through Discourse's own variables ───────
+//
+// Discourse resolves every font in the product from --font-family and
+// --heading-font-family, and every content container width from --d-max-width.
+// Setting those three is the whole job. The previous theme instead repeated
+// `font-family: "Inter" !important` across dozens of selectors, which is why it
+// still missed elements Discourse added later.
+:root {
+  --font-family: #{$bs-font-ui};
+  --heading-font-family: #{$bs-font-display};
+  --d-max-width: #{$container_width}px;
+}
+
+// Long-form reading copy gets the editorial serif, matching article body text
+// on the site. Everything else stays in the UI sans.
+.cooked,
+.d-editor-preview {
+  font-family: $bs-font-editorial;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: $bs-body;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: $bs-font-display;
+    letter-spacing: -0.02em;
+    color: $bs-black;
+  }
+}
+
+// ── Headings ──────────────────────────────────────────────────────────────
+// The site sets display headlines tight and heavy. --heading-font-family
+// already supplies the family, so only weight and tracking are needed.
+h1,
+h2,
+h3,
+h4,
+h5,
+.topic-title,
+.title-wrapper .title {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+// ── Links ─────────────────────────────────────────────────────────────────
+// Black links, gold on hover, the same as the site. The palette in about.json
+// sets --tertiary to black, so most of this comes for free; this covers the
+// hover colour, which the palette has no slot for.
+a:hover,
+a:focus-visible {
+  color: $bs-gold-hover;
+}
+
+// ── Buttons ───────────────────────────────────────────────────────────────
+// Square corners and the site's black-to-gold inversion on hover.
+.btn {
+  border-radius: 2px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: $bs-gold;
+  border-color: $bs-gold;
+  color: $bs-black;
+}
+
+// ── Small caps labels ─────────────────────────────────────────────────────
+// The site's section labels and category chips share one treatment.
+.badge-category__wrapper .badge-category,
+.category-name {
+  border-radius: 2px;
+  font-family: $bs-font-ui;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
