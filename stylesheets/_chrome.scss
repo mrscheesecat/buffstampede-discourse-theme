@@ -338,6 +338,17 @@
   // The accordion rows are <summary>, not <a>, so they need their own colour.
   // Scoping the anchor rule to `a` alone left these three inheriting
   // Discourse's --primary, which is near-black against this panel.
+  // Scoped through the element name to outrank Discourse's own `summary` rule,
+  // which forces `display: list-item`. That override was the real cause of the
+  // stray triangle — a marker only renders on a list-item — and it also
+  // collapsed `space-between`, leaving the caret next to the label instead of
+  // at the right edge of the row the way the site has it.
+  summary#{&}__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &__summary {
     color: rgba(255, 255, 255, 0.9);
     list-style: none;
