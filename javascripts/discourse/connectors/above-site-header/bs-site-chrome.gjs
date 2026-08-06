@@ -1,4 +1,6 @@
 import Component from "@glimmer/component";
+import { action } from "@ember/object";
+import { on } from "@ember/modifier";
 import { service } from "@ember/service";
 import BsSocialIcon from "../../components/bs-social-icon";
 import { parseSocialLinks } from "../../lib/bs-links";
@@ -62,6 +64,67 @@ export default class BsSiteChrome extends Component {
     return `${this.mainSiteUrl}/sign-up`;
   }
 
+  // ── The account cluster ──────────────────────────────────────────────
+  // The site draws the member's avatar here, in band 1, through Clerk's
+  // UserButton: a 28px square, then a 12px divider rule, then the gold
+  // MY ACCOUNT link. See components/AuthButtons.jsx in the site repo.
+  //
+  // Clerk cannot run inside Discourse, so this draws the same cluster from
+  // Discourse's own user record. The picture is identical either way:
+  // `discourse connect overrides avatar` is on, so the forum avatar is the
+  // Clerk avatar. Discourse's own copy of this control, down in the header
+  // icon row, is hidden by CSS while these bands are on screen, so a member
+  // never sees themselves twice.
+
+  get displayName() {
+    return (
+      this.currentUser?.name || this.currentUser?.username || "My account"
+    );
+  }
+
+  // avatar_template looks like "/user_avatar/…/{size}/13_2.png". 96 is one of
+  // the sizes Discourse already generates, and covers a 28px box at 3x.
+  get avatarUrl() {
+    const template = this.currentUser?.avatar_template;
+
+    if (!template) {
+      return null;
+    }
+
+    return template.replace("{size}", "96");
+  }
+
+  // Discourse has renamed this counter more than once, so read whichever of
+  // the two current properties exists rather than pinning to one.
+  get unreadCount() {
+    return (
+      this.currentUser?.all_unread_notifications_count ??
+      this.currentUser?.unread_notifications ??
+      0
+    );
+  }
+
+  get hasUnread() {
+    return this.unreadCount > 0;
+  }
+
+  // Forward the click to Discourse's real toggle rather than reimplementing
+  // the user menu. The button is hidden, not removed, so Ember still owns the
+  // menu's state, its position, and its teardown — nothing here has to know
+  // how any of that works. If a future Discourse renames the id, the member
+  // still lands on their account page instead of on a dead control.
+  @action
+  openUserMenu(event) {
+    const toggle = document.getElementById("toggle-current-user");
+
+    if (toggle) {
+      event.preventDefault();
+      toggle.click();
+    } else {
+      window.location.href = this.accountUrl;
+    }
+  }
+
   get logoUrl() {
     return settings.masthead_logo_url;
   }
@@ -95,10 +158,28 @@ export default class BsSiteChrome extends Component {
             {{#if this.showAuthLinks}}
               <div class="bs-topbar__auth">
                 {{#if this.signedIn}}
-                  {{! The site shows the Clerk UserButton here. Clerk cannot run
-                      inside Discourse, and Discourse's own avatar menu in the
-                      nav row already covers it, so this is the account link
-                      only — the one deliberate difference from the site. }}
+                  {{#if this.avatarUrl}}
+                    <button
+                      type="button"
+                      class="bs-topbar__avatar"
+                      aria-label="Notifications and account"
+                      {{on "click" this.openUserMenu}}
+                    >
+                      <img
+                        src={{this.avatarUrl}}
+                        alt={{this.displayName}}
+                        width="28"
+                        height="28"
+                      />
+                      {{#if this.hasUnread}}
+                        <span
+                          class="bs-topbar__avatar-dot"
+                          aria-hidden="true"
+                        ></span>
+                      {{/if}}
+                    </button>
+                  {{/if}}
+
                   <a
                     class="bs-topbar__auth-link bs-topbar__auth-link--primary"
                     href={{this.accountUrl}}

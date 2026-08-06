@@ -118,6 +118,85 @@
       }
     }
   }
+
+  // AuthButtons.jsx renders Clerk's UserButton at 28px with a 0px radius, so
+  // this is a square and not a circle. Measured on the live signed-in site,
+  // not assumed: Clerk's default is round and the site overrides it.
+  //
+  // It is the first child of __auth, so the existing rules give the MY ACCOUNT
+  // link beside it its 12px of left padding, and the divider below lands in
+  // the same place as the site's.
+  &__avatar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 12px 0 0;
+    border: none;
+    border-right: 1px solid $bs-topbar-divider;
+    background: none;
+    line-height: 0;
+    cursor: pointer;
+
+    img {
+      display: block;
+      width: 28px;
+      height: 28px;
+      border-radius: 0;
+      object-fit: cover;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $bs-gold;
+      outline-offset: 2px;
+    }
+
+    // Discourse puts an unread count on its own avatar. The site has no such
+    // control, so there is no site treatment to copy: a dot, not a number,
+    // because a number changes width and this cluster has to stay the same
+    // size as the site's.
+    &-dot {
+      position: absolute;
+      top: -1px;
+      right: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $bs-gold;
+      border: 2px solid $bs-topbar-bg;
+    }
+  }
+}
+
+// ── One account control, never two ────────────────────────────────────────
+// Band 1 owns identity, matching the site. Discourse draws its own login and
+// account controls in the header icon row, which is a second copy of
+// something band 1 already shows, one band lower and in a different style.
+//
+// Signed out, band 1 already carries LOGIN and JOIN FREE, both of which route
+// through DiscourseConnect, so Discourse's own buttons are redundant always.
+.d-header {
+  .login-button,
+  .sign-up-button {
+    display: none;
+  }
+}
+
+// Signed in, the avatar is hidden only while band 1 is on screen. Once the
+// bands scroll away and the header docks, `bs-docked` is set and Discourse's
+// avatar comes back, carrying its real notification badge and its real menu.
+// Hidden, not removed: the band 1 button forwards its click to this one.
+html:not(.bs-docked) .d-header {
+  .header-dropdown-toggle.current-user,
+  #toggle-current-user {
+    display: none;
+  }
+}
+
+// Docked, it should read as the same control that was in band 1 a moment ago.
+.d-header #toggle-current-user img.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 0;
 }
 
 // ── Band 2: masthead ──────────────────────────────────────────────────────

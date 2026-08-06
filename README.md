@@ -12,11 +12,35 @@ handoff. That is done with three bands:
 
 | Band | What it is | Where it comes from | Sticky? |
 |---|---|---|---|
-| 1 | Thin dark bar: date, social links | `above-site-header` connector | No, scrolls away |
+| 1 | Thin dark bar: date, social links, account | `above-site-header` connector | No, scrolls away |
 | 2 | Centered BuffStampede wordmark | `above-site-header` connector | No, scrolls away |
-| 3 | Section nav, search, notifications, avatar | Discourse's own `.d-header` | Yes |
+| 3 | Section nav, search, chat, hamburger | Discourse's own `.d-header` | Yes |
 
 Scrolling leaves band 3 docked at the top as a single compact black bar.
+
+## Where the account control lives
+
+Band 1, because that is where the site puts it. `components/AuthButtons.jsx` on the
+site renders Clerk's UserButton as a 28px square, a 12px divider, then the gold
+MY ACCOUNT link, and this theme reproduces that cluster measurement for
+measurement from Discourse's own user record. The picture is the same picture:
+`discourse connect overrides avatar` is on, so the forum avatar is the Clerk
+avatar.
+
+A member must never see themselves twice. So:
+
+- Discourse's Log In and Sign Up buttons in band 3 are hidden permanently. Band 1
+  already carries LOGIN and JOIN FREE, and both route through DiscourseConnect.
+- Discourse's avatar in band 3 is hidden **only while band 1 is on screen**. Once
+  the bands scroll away and the header docks, `bs-docked` is set on the document
+  element and Discourse's avatar returns, with its real notification badge and its
+  real menu. Otherwise a scrolled reader would have no account control at all.
+- `bs-docked` is set by an IntersectionObserver watching the masthead band, in
+  `api-initializers/bs-board.gjs`. No band height is written down anywhere, so no
+  two numbers can fall out of agreement.
+- The band 1 avatar does not reimplement the user menu. It forwards its click to
+  Discourse's real `#toggle-current-user`, which is hidden rather than removed, so
+  Ember still owns the menu's state, position, and teardown.
 
 The important part is what this theme does **not** do. Discourse already sets
 `.d-header-wrap { position: sticky; top: 0 }`. Bands 1 and 2 are rendered as
