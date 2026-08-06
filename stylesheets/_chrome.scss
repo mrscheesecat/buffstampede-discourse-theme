@@ -95,8 +95,13 @@
         color: $bs-text-light;
       }
 
-      &:first-child {
-        padding-left: 0;
+      // AuthButtons.jsx pads both sides of Login by 12px and only the left
+      // side of the last control, whose right edge sits flush with the
+      // container. This said `:first-child { padding-left: 0 }` instead, which
+      // pulled the pair 12px left of the site's and left a 12px gap at the
+      // right edge. Caught by comparing the two headers at the same width.
+      &:last-child {
+        padding-right: 0;
       }
 
       &:not(:last-child) {
