@@ -9,6 +9,14 @@
 //      Discourse's header is already sticky. Overriding it is what broke the
 //      previous theme.
 //   3. No `!important` unless a comment says which Discourse rule requires it.
+//   4. Import nothing from Discourse except `apiInitializer`, `@glimmer` and
+//      `@ember` basics, and `discourse/truth-helpers`. Discourse compiles all of
+//      a theme's JavaScript into one bundle, so a single import of a path that
+//      does not exist takes down every band at once, live, with only the CSS
+//      left standing. That happened on August 6 with
+//      `discourse/components/d-icon`, which is a helper at
+//      `discourse/ui-kit/helpers/d-icon` and never was a component. Icons are
+//      inline SVG copied from the site's components instead.
 
 @import "../stylesheets/base";
 @import "../stylesheets/chrome";

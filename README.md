@@ -44,8 +44,13 @@ down here, where the site has no counterpart to disagree with.
   real height of its header. This is the pattern Discourse's Horizon theme uses
   for its list controls. No height is written down, and nothing touches
   `.d-header` or its wrapper.
-- **`bars` and `comment`** are declared in the `svg_icons` modifier in
-  `about.json` so they survive Discourse's icon subsetting.
+- **The icons are inline SVG**, the hamburger copied glyph for glyph from
+  `components/Nav.jsx`. Nothing in this file imports a Discourse component. The
+  first version imported `discourse/components/d-icon`, which does not exist
+  (it is a helper at `discourse/ui-kit/helpers/d-icon`), and because Discourse
+  compiles a theme's JavaScript into a single bundle, that one bad import took
+  every band down at once on the live forum. Rule 4 in `common/common.scss`
+  exists because of it.
 
 ## Where the account control lives
 

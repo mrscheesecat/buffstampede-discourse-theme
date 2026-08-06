@@ -108,9 +108,8 @@
     color: $bs-body;
     cursor: pointer;
 
-    .d-icon {
-      width: 18px;
-      height: 18px;
+    svg {
+      display: block;
     }
 
     &:hover,

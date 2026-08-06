@@ -2,7 +2,6 @@ import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { on } from "@ember/modifier";
 import { service } from "@ember/service";
-import DIcon from "discourse/components/d-icon";
 
 // Band 4: the board bar.
 //
@@ -20,6 +19,14 @@ import DIcon from "discourse/components/d-icon";
 // Search stays in band 3. It is a magnifying glass in the same position on both
 // surfaces, so it reads as the same control rather than a forum-specific one.
 // Only chat and the hamburger, which have no site equivalent, move down here.
+//
+// The icons are inline SVG, and the hamburger is the exact glyph from
+// components/Nav.jsx. The first version of this file imported Discourse's icon
+// component from a path that does not exist, and because Discourse compiles a
+// theme's JavaScript into one bundle, that single bad import took down every
+// band at once on the live forum. Nothing in this file imports a Discourse
+// component, so no Discourse rename can do that again. See the import rule in
+// common/common.scss.
 export default class BsBoardBar extends Component {
   @service router;
   @service site;
@@ -125,7 +132,7 @@ export default class BsBoardBar extends Component {
           {{#each this.crumbs as |crumb|}}
             <span class="bs-board-bar__crumb">
               {{#if crumb.showSeparator}}
-                <span class="bs-board-bar__sep" aria-hidden="true">&rsaquo;</span>
+                <span class="bs-board-bar__sep" aria-hidden="true">›</span>
               {{/if}}
 
               {{#if crumb.isLast}}
@@ -145,7 +152,19 @@ export default class BsBoardBar extends Component {
               title="Chat"
               aria-label="Chat"
             >
-              <DIcon @icon="comment" />
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              ><path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                /></svg>
             </a>
           {{/if}}
 
@@ -156,7 +175,19 @@ export default class BsBoardBar extends Component {
             aria-label="Forum menu"
             {{on "click" this.toggleHamburger}}
           >
-            <DIcon @icon="bars" />
+            {{! The site's own hamburger, from components/Nav.jsx }}
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              aria-hidden="true"
+            ><path
+                d="M3 6h16M3 11h16M3 16h16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              /></svg>
           </button>
         </div>
       </div>
