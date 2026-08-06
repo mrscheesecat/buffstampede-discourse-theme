@@ -147,7 +147,7 @@ export default class BsBoardBar extends Component {
         <div class="bs-board-bar__controls">
           {{#if this.chatEnabled}}
             <a
-              class="bs-board-bar__control"
+              class="bs-board-bar__control bs-board-bar__control--chat"
               href="/chat"
               title="Chat"
               aria-label="Chat"
@@ -168,9 +168,11 @@ export default class BsBoardBar extends Component {
             </a>
           {{/if}}
 
+          {{! Hidden at 680px and below, where Discourse's own hamburger comes
+              back in band 3 to match the site's mobile nav row. }}
           <button
             type="button"
-            class="bs-board-bar__control"
+            class="bs-board-bar__control bs-board-bar__control--menu"
             title="Forum menu"
             aria-label="Forum menu"
             {{on "click" this.toggleHamburger}}

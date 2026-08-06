@@ -242,9 +242,16 @@ html:not(.bs-docked) .d-header {
   box-shadow: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
-  // A small mark, not the full wordmark — the wordmark lives in the masthead.
+  // No logo in this row. The site's nav row starts with its first section
+  // link, flush with the container, and Discourse's small mark was pushing
+  // ours 48px right of that: measured at 68px against the site's 20px, which
+  // is the difference you notice without being able to name it.
+  //
+  // Nothing is lost by removing it. The wordmark in band 2 goes to the main
+  // site, and The Board crumb in band 4 goes to the forum home, so both links
+  // this mark provided still exist, in the places the site puts them.
   .title {
-    --d-logo-height: 26px;
+    display: none;
   }
 
   // Keep the header's contents on the same column as every other band.

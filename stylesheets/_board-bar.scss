@@ -133,13 +133,31 @@ html.bs-docked .bs-board-bar__inner--title {
 }
 
 // ── Band 3 keeps only what the site's nav row has ───────────────────────────
-// Chat and the hamburger now live in band 4. Search stays: it is a magnifying
-// glass in the same place on both surfaces. Hidden rather than removed, because
-// the band 4 button forwards its click to the real hamburger.
-.d-header {
-  .chat-header-icon,
-  .header-dropdown-toggle.hamburger-dropdown,
-  #toggle-hamburger-menu {
+// Search stays in band 3: a magnifying glass in the same place on both
+// surfaces. Chat has no site equivalent at any width, so it lives in band 4
+// always. Hidden rather than removed, because band 4 forwards its click to the
+// real control.
+.d-header .chat-header-icon {
+  display: none;
+}
+
+// The hamburger follows the site. Above 680px the site's nav row has no
+// hamburger, so neither does band 3, and the control sits in band 4. At 680px
+// and below the site's nav row does have one, on the left, so Discourse's own
+// hamburger comes back and band 4 drops its copy. Same control either way,
+// placed wherever the site places it at that width. 680px is the site's own
+// breakpoint, the one already used further down this file.
+@media (min-width: 681px) {
+  .d-header {
+    .header-dropdown-toggle.hamburger-dropdown,
+    #toggle-hamburger-menu {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 680px) {
+  .bs-board-bar__control--menu {
     display: none;
   }
 }
