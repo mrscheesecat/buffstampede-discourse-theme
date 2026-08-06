@@ -402,8 +402,14 @@ html:not(.bs-docked) .d-header {
   display: none;
 }
 
-.hamburger-panel .bs-mobile-nav {
-  display: block;
+// And only below 680px. That is the width where the nav row gives up its
+// links, so the panel is the only way to reach a section from the forum. Above
+// it, the nav row is right there showing the same six sections, and repeating
+// them inside the menu directly beneath it is noise.
+@media (max-width: 680px) {
+  .hamburger-panel .bs-mobile-nav {
+    display: block;
+  }
 }
 
 .bs-mobile-nav {
