@@ -14,9 +14,38 @@ handoff. That is done with three bands:
 |---|---|---|---|
 | 1 | Thin dark bar: date, social links, account | `above-site-header` connector | No, scrolls away |
 | 2 | Centered BuffStampede wordmark | `above-site-header` connector | No, scrolls away |
-| 3 | Section nav, search, chat, hamburger | Discourse's own `.d-header` | Yes |
+| 3 | Section nav, search | Discourse's own `.d-header` | Yes |
+| 4 | Breadcrumb, title, forum controls | `below-site-header` connector | Yes, under band 3 |
 
-Scrolling leaves band 3 docked at the top as a single compact black bar.
+Scrolling leaves bands 3 and 4 docked at the top, the black nav row with the
+light board bar beneath it. Band 4 drops its title when docked, so what stays
+pinned is a breadcrumb row and two icons.
+
+## Band 4, the board bar
+
+A copy of `components/PageHeader.jsx` from the site: `#e8e8e4`, a 3px gold rule,
+1240px container, breadcrumb at 0.8rem / 700 / 0.06em uppercase, display-face
+title. Every section of the site has this band, so the forum has it too.
+
+It exists to empty the right side of band 3. Discourse put search, chat, a
+hamburger and an avatar there; the site's nav row has a search icon and nothing
+else, so the two rows could never match. The controls Discourse invented moved
+down here, where the site has no counterpart to disagree with.
+
+- **Search stays in band 3.** Same glyph, same position on both surfaces, so it
+  reads as one control rather than a forum-specific one.
+- **Chat and the hamburger live in band 4.** The hamburger forwards its click to
+  Discourse's real `#toggle-hamburger-menu`, hidden rather than removed. Chat is
+  a plain link to `/chat`, shown only when `chat_enabled`.
+- **No title on a topic page.** Discourse renders the topic title as the H1
+  there, and two H1s is a rule the site does not break. Breadcrumb and controls
+  only.
+- **Pinned with `top: var(--header-offset)`**, Discourse's own variable for the
+  real height of its header. This is the pattern Discourse's Horizon theme uses
+  for its list controls. No height is written down, and nothing touches
+  `.d-header` or its wrapper.
+- **`bars` and `comment`** are declared in the `svg_icons` modifier in
+  `about.json` so they survive Discourse's icon subsetting.
 
 ## Where the account control lives
 

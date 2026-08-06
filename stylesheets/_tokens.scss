@@ -16,6 +16,9 @@ $bs-body: #4a4a46;
 $bs-muted: #767672;
 $bs-text-light: #a0a09c;
 
+// COLORS.imgBg on the site. PageHeader.jsx uses it for the breadcrumb band.
+$bs-img-bg: #e8e8e4;
+
 // The dark bands of chrome. #1a1a1a is the site's top bar, one step off black
 // so the bar reads as a distinct band against the masthead.
 $bs-topbar-bg: #1a1a1a;

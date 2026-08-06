@@ -1,0 +1,146 @@
+// ── Band 4: the board bar ───────────────────────────────────────────────────
+// A copy of PageHeader.jsx from the site repo, measurement for measurement:
+// #e8e8e4 band, 3px gold bottom rule, 1240px container, 20px gutters,
+// breadcrumb at 0.8rem / 700 / 0.06em uppercase, and a display-face title.
+//
+// It carries the two controls Discourse has and the site does not, so nothing
+// unmatched is left on the right side of band 3.
+
+.bs-board-bar {
+  // Pinned directly beneath Discourse's own docked header. `--header-offset` is
+  // Discourse's variable, maintained by core as the header's real height, and
+  // this is the same pattern Discourse's own Horizon theme uses for its list
+  // controls. No band height is written down here, so nothing can fall out of
+  // agreement with anything else, which is what broke the previous theme.
+  //
+  // Note what is not here: nothing touches .d-header or its wrapper.
+  position: sticky;
+  top: var(--header-offset, 0px);
+  z-index: 100;
+  background: $bs-img-bg;
+  border-bottom: 3px solid $bs-gold;
+
+  &__inner {
+    max-width: #{$container_width}px;
+    margin: 0 auto;
+    padding: 16px $bs-pad-x 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    // PageHeader.jsx pads 28/20/24 when it has a title and 16/20/14 when it
+    // does not. Two rows here rather than one, so the title can be dropped on
+    // scroll without disturbing the breadcrumb row above it.
+    &--title {
+      padding: 0 $bs-pad-x 24px;
+    }
+  }
+
+  &__crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  &__crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    a {
+      font-family: $bs-font-ui;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: $bs-body;
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-black;
+      }
+    }
+  }
+
+  &__sep {
+    color: $bs-text-light;
+  }
+
+  &__current {
+    font-family: $bs-font-ui;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $bs-black;
+  }
+
+  &__title {
+    font-family: $bs-font-display;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: $bs-black;
+    margin: 0;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: $bs-body;
+    cursor: pointer;
+
+    .d-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $bs-black;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $bs-gold;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Once the site chrome above has scrolled away, this band is all that is left
+// holding the page in place, and a display-size title pinned to the top of a
+// phone screen costs more than it gives. The breadcrumb row and the controls
+// stay; the title goes.
+html.bs-docked .bs-board-bar__inner--title {
+  display: none;
+}
+
+// ── Band 3 keeps only what the site's nav row has ───────────────────────────
+// Chat and the hamburger now live in band 4. Search stays: it is a magnifying
+// glass in the same place on both surfaces. Hidden rather than removed, because
+// the band 4 button forwards its click to the real hamburger.
+.d-header {
+  .chat-header-icon,
+  .header-dropdown-toggle.hamburger-dropdown,
+  #toggle-hamburger-menu {
+    display: none;
+  }
+}
