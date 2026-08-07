@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import { on } from "@ember/modifier";
 import { service } from "@ember/service";
 import BsSocialIcon from "../../components/bs-social-icon";
-import { parseSocialLinks } from "../../lib/bs-links";
+import { socialItems } from "../../lib/bs-chrome-source";
 
 // The two bands of site chrome that sit ABOVE Discourse's own header: the thin
 // date / social / auth top bar, and the centered wordmark masthead.
@@ -49,7 +49,7 @@ export default class BsSiteChrome extends Component {
   }
 
   get socials() {
-    return parseSocialLinks(settings.topbar_socials);
+    return socialItems();
   }
 
   get mainSiteUrl() {
@@ -149,7 +149,11 @@ export default class BsSiteChrome extends Component {
                     rel="noopener noreferrer"
                     aria-label={{social.label}}
                   >
-                    <BsSocialIcon @icon={{social.icon}} />
+                    <BsSocialIcon
+                      @icon={{social.icon}}
+                      @viewBox={{social.viewBox}}
+                      @path={{social.path}}
+                    />
                   </a>
                 {{/each}}
               </div>

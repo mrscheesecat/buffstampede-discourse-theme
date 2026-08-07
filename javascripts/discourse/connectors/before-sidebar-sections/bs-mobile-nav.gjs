@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import BsSocialIcon from "../../components/bs-social-icon";
-import { parseSocialLinks } from "../../lib/bs-links";
+import { socialItems } from "../../lib/bs-chrome-source";
 import { navItems } from "../../lib/bs-nav-config";
 
 // The site's sections inside Discourse's hamburger panel.
@@ -22,7 +22,7 @@ export default class BsMobileNav extends Component {
   }
 
   get socials() {
-    return parseSocialLinks(settings.topbar_socials);
+    return socialItems();
   }
 
   <template>
@@ -73,7 +73,11 @@ export default class BsMobileNav extends Component {
               rel="noopener noreferrer"
               aria-label={{social.label}}
             >
-              <BsSocialIcon @icon={{social.icon}} />
+              <BsSocialIcon
+                      @icon={{social.icon}}
+                      @viewBox={{social.viewBox}}
+                      @path={{social.path}}
+                    />
             </a>
           {{/each}}
         </div>

@@ -1,4 +1,5 @@
 import { apiInitializer } from "discourse/lib/api";
+import { loadChrome } from "../lib/bs-chrome-source";
 
 // Marks the document element with `bs-docked` once the site chrome above
 // Discourse's header has scrolled out of view.
@@ -73,4 +74,10 @@ export default apiInitializer((api) => {
 
   requestAnimationFrame(attempt);
   api.onPageChange(() => attempt());
+
+  // Pull the site's nav, socials and tokens. Renders from the cached copy
+  // immediately and updates in place when the fetch lands. Deliberately not
+  // awaited: nothing here blocks the header, and every failure path already
+  // falls back to the arrays bundled with this theme.
+  loadChrome();
 });

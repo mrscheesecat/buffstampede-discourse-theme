@@ -4,8 +4,20 @@ import { eq } from "discourse/truth-helpers";
 // components/TopBar.jsx in the site repo so the two stay identical.
 // These are brand logos rather than UI icons, so they are inline SVG instead of
 // Font Awesome names — Discourse's icon subset does not carry brand marks.
+// When the site sends the glyph with the account, draw that. lib/social.js is
+// then the only place a brand mark is defined, and a network this theme has
+// never heard of renders correctly without a code change here. The keyed
+// glyphs below stay as the fallback for when the payload is unavailable.
 const BsSocialIcon = <template>
-  {{#if (eq @icon "youtube")}}
+  {{#if @path}}
+    <svg
+      width="15"
+      height="15"
+      viewBox={{if @viewBox @viewBox "0 0 24 24"}}
+      fill="currentColor"
+      aria-hidden="true"
+    ><path d={{@path}} /></svg>
+  {{else if (eq @icon "youtube")}}
     <svg
       width="16"
       height="16"
