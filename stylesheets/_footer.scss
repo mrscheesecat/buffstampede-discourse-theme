@@ -1,0 +1,124 @@
+// ── The footer ──────────────────────────────────────────────────────────────
+// components/Footer.jsx from the site repo, measurement for measurement: black
+// band, 3px gold rule on top, 1240px column, logo at 52px, socials at 20px, a
+// flat link row at 9.92px uppercase, and the copyright line under it.
+//
+// Sizes are in px rather than rem for the reason in rule 5 of common.scss: the
+// site's root is 16px and Discourse's follows the reader's text size setting.
+// The site's values converted at 16px: 0.62rem is 9.92px, 0.65rem is 10.4px.
+
+.bs-footer {
+  background: $bs-black;
+  border-top: 3px solid $bs-gold;
+  // Discourse's footer outlet sits inside the content column, so pull the band
+  // out to the full width of the viewport the way the site's footer runs.
+  margin: 40px calc(50% - 50vw) 0;
+  width: 100vw;
+
+  &__top,
+  &__bottom {
+    box-sizing: border-box;
+    max-width: #{$container_width}px;
+    margin: 0 auto;
+  }
+
+  &__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 48px $bs-pad-x 40px;
+  }
+
+  &__logo img {
+    display: block;
+    height: 52px;
+  }
+
+  &__label {
+    font-family: $bs-font-ui;
+    font-size: 9.92px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $bs-gold;
+    margin: 0 0 16px;
+  }
+
+  &__social-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    a {
+      display: flex;
+      align-items: center;
+      color: $bs-muted;
+      transition: color 0.15s;
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold;
+      }
+    }
+  }
+
+  &__rule {
+    box-sizing: border-box;
+    max-width: #{$container_width}px;
+    margin: 0 auto;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px $bs-pad-x 32px;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+
+    a {
+      font-family: $bs-font-ui;
+      font-size: 9.92px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $bs-muted;
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        color: $bs-gold;
+      }
+    }
+  }
+
+  &__legal {
+    font-family: $bs-font-ui;
+    font-size: 10.4px;
+    color: #555552;
+    text-align: center;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__sep {
+    margin: 0 8px;
+    color: #2e2e2e;
+  }
+}
+
+// Discourse wraps this outlet in .custom-footer-content and gives it its own
+// spacing, which would sit inside the black band as a gap above the gold rule.
+.custom-footer-content {
+  padding: 0;
+  margin: 0;
+}

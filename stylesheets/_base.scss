@@ -11,6 +11,10 @@
   --font-family: #{$bs-font-ui};
   --heading-font-family: #{$bs-font-display};
   --d-max-width: #{$container_width}px;
+  // Discourse's default is 0.67em, which against its own root font size lands
+  // at about 9.4px. The site's gutter is 20px, so every content container sat
+  // roughly 10px off the column its own header was on. This is that 10px.
+  --d-wrap-padding-x: #{$bs-pad-x};
 }
 
 // Long-form reading copy gets the editorial serif, matching article body text

@@ -254,12 +254,6 @@ html:not(.bs-docked) .d-header {
     display: none;
   }
 
-  // Keep the header's contents on the same column as every other band.
-  > .wrap {
-    max-width: #{$container_width}px;
-    margin: 0 auto;
-    padding: 0 $bs-pad-x;
-  }
 
   // The dropdowns hang below the header, so nothing between them and the
   // header may clip. Discourse does not set overflow here, but its contents
