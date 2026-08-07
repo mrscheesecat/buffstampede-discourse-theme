@@ -17,6 +17,13 @@
 //      `discourse/components/d-icon`, which is a helper at
 //      `discourse/ui-kit/helpers/d-icon` and never was a component. Icons are
 //      inline SVG copied from the site's components instead.
+//   5. No `rem` in the chrome. The site's root font size is 16px. Discourse's
+//      follows the reader's own text size preference, so the same `0.8rem`
+//      renders about 12 percent smaller here, and larger again for a reader who
+//      has set large text. Chrome that is meant to match the site pixel for
+//      pixel is written in px. The site's rem values converted at 16px:
+//      0.58rem is 9.28px, 0.6rem is 9.6px, 0.68rem is 10.88px, 0.7rem is
+//      11.2px, 0.72rem is 11.52px, 0.8rem is 12.8px, 0.95rem is 15.2px.
 
 @import "../stylesheets/base";
 @import "../stylesheets/chrome";

@@ -52,7 +52,7 @@
 
     a {
       font-family: $bs-font-ui;
-      font-size: 0.8rem;
+      font-size: 12.8px;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -72,7 +72,7 @@
 
   &__current {
     font-family: $bs-font-ui;
-    font-size: 0.8rem;
+    font-size: 12.8px;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -82,7 +82,7 @@
   &__title {
     font-family: $bs-font-display;
     font-weight: 800;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(32px, 5vw, 48px);
     letter-spacing: -0.04em;
     line-height: 1.1;
     color: $bs-black;
