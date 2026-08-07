@@ -129,11 +129,21 @@
   }
 }
 
-// Once the site chrome above has scrolled away, this band is all that is left
-// holding the page in place, and a display-size title pinned to the top of a
-// phone screen costs more than it gives. The breadcrumb row and the controls
-// stay; the title goes.
-html.bs-docked .bs-board-bar__inner--title {
+// The title used to be hidden once the page scrolled, to keep a display-size
+// heading off the top of a phone screen. That was a bug, not a saving: this
+// band is in the document flow, so hiding part of it shortened the page, which
+// could scroll the masthead back into view, which showed the title again. On a
+// page only slightly taller than the window that oscillates, and the reader
+// sees the header jitter and the page refuse to scroll.
+//
+// Nothing here changes the height of anything based on scroll position. The
+// band is whatever height its contents need, and it stays that height.
+
+// Not on admin pages. Discourse's admin layout has its own sticky chrome and a
+// breadcrumb reading Home, The Board over a settings page is wrong anyway.
+// Discourse marks these routes with .admin-area on the document element, which
+// is also how it hides its own footer there.
+html.admin-area .bs-board-bar {
   display: none;
 }
 
