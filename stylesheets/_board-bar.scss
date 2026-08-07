@@ -21,6 +21,11 @@
   border-bottom: 3px solid $bs-gold;
 
   &__inner {
+    // Explicit, because without it this box measured 1280px wide: the 1240px
+    // cap applied to the content and the 20px gutters were added outside it,
+    // so the whole band sat 20px left of every other band and overhung them by
+    // 20px on the right.
+    box-sizing: border-box;
     max-width: #{$container_width}px;
     margin: 0 auto;
     padding: 16px $bs-pad-x 14px;

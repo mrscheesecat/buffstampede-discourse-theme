@@ -290,7 +290,10 @@ html:not(.bs-docked) .d-header {
   flex: 1 1 auto;
   min-width: 0;
   height: 100%;
-  margin-left: 22px;
+  // No left margin. This 22px existed to clear Discourse's small logo mark,
+  // which used to sit here and is now hidden, so it was pushing the section
+  // links 22px right of the date above them and the breadcrumb below them.
+  margin-left: 0;
 
   &__group {
     position: relative;
