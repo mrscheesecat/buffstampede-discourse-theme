@@ -285,10 +285,13 @@ html:not(.bs-docked) .d-header {
   flex: 1 1 auto;
   min-width: 0;
   height: 100%;
-  // No left margin. This 22px existed to clear Discourse's small logo mark,
-  // which used to sit here and is now hidden, so it was pushing the section
-  // links 22px right of the date above them and the breadcrumb below them.
-  margin-left: 0;
+  // Pulled left by exactly the links' own left padding, so the first item's
+  // TEXT lands on the container edge while its padded box, and therefore its
+  // gold underline and its dropdown, start 11px before it. Nav.jsx does the
+  // same thing: .nav-desktop carries margin-left -11px against 11px of button
+  // padding. Before this the row had no left padding at all, so the underline
+  // was flush with the words instead of extending past them.
+  margin-left: -11px;
 
   &__group {
     position: relative;
@@ -305,11 +308,12 @@ html:not(.bs-docked) .d-header {
     display: flex;
     align-items: center;
     gap: 4px;
-    // The site's 14px of vertical padding, which this had dropped. Without it
-    // the group is only as tall as the line of text, so the gold underline on
-    // the active section sat directly under the words instead of along the
-    // bottom of the band the way it does on the site.
-    padding: 14px 22px 14px 0;
+    // 14px vertical, 11px each side. Both halves matter. The vertical padding
+    // makes the group fill the band so the active section's underline sits on
+    // the band's bottom edge. The symmetric 11px is what gives the underline
+    // and the dropdown their inset from the text, and it keeps the 22px gap
+    // between items that the old one-sided padding produced.
+    padding: 14px 11px;
     font-family: $bs-font-ui;
     font-size: 12.8px;
     font-weight: 600;
