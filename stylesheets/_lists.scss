@@ -66,8 +66,12 @@
     color: $bs-muted;
   }
 
+  // Avatars are circles here too. This rule used to set a 2px radius, which is
+  // right for the category chips and the buttons but wrong for a person. It also
+  // quietly beat the global avatar rule in _base.scss, since both are img.avatar
+  // and this one comes later.
   img.avatar {
-    border-radius: 2px;
+    border-radius: 50%;
   }
 }
 
