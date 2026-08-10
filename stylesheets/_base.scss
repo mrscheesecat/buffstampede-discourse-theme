@@ -85,3 +85,14 @@ a:focus-visible {
   text-transform: uppercase;
   font-size: 0.65rem;
 }
+
+// ── Avatars ─────────────────────────────────────────────────────────────────
+// Circles, everywhere: posts, topic lists, user cards, the account control.
+// This matches the site, where Clerk renders the account avatar as a circle.
+//
+// Worth knowing if this ever looks wrong: Clerk puts the rounded shape on its
+// own wrapper element rather than on the <img>, so inspecting the image shows a
+// 0px radius even though what a reader sees is a circle. Trust the screen.
+img.avatar {
+  border-radius: 50%;
+}

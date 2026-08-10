@@ -124,9 +124,10 @@
     }
   }
 
-  // AuthButtons.jsx renders Clerk's UserButton at 28px with a 0px radius, so
-  // this is a square and not a circle. Measured on the live signed-in site,
-  // not assumed: Clerk's default is round and the site overrides it.
+  // AuthButtons.jsx renders Clerk's UserButton at 28px, as a circle. The round
+  // shape lives on Clerk's own wrapper element and not on the image inside it,
+  // so measuring the image reads 0px and looks square. It is not. Avatars are
+  // circles on both surfaces; see the rule in _base.scss.
   //
   // It is the first child of __auth, so the existing rules give the MY ACCOUNT
   // link beside it its 12px of left padding, and the divider below lands in
@@ -146,7 +147,7 @@
       display: block;
       width: 28px;
       height: 28px;
-      border-radius: 0;
+      border-radius: 50%;
       object-fit: cover;
     }
 
@@ -201,7 +202,7 @@ html:not(.bs-docked) .d-header {
 .d-header #toggle-current-user img.avatar {
   width: 28px;
   height: 28px;
-  border-radius: 0;
+  border-radius: 50%;
 }
 
 // ── Band 2: masthead ──────────────────────────────────────────────────────
