@@ -62,8 +62,12 @@ const NAV_ITEMS = [
     forum: true,
   },
   {
-    label: "Support",
+    label: "Support BuffStampede",
     href: "/support",
+    // Rendered as a gold pill on the right of the nav row, matching
+    // Nav.jsx on the site. bs-header-nav.gjs picks this up; anything
+    // that does not know the variant falls back to a plain link.
+    variant: "button-gold",
   },
   {
     label: "About",

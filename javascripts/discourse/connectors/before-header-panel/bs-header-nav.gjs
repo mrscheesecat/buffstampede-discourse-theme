@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import { eq } from "discourse/truth-helpers";
 import { navItems } from "../../lib/bs-nav-config";
 
 // The site's section nav, rendered inside Discourse's own header between the
@@ -39,11 +40,13 @@ export default class BsHeaderNav extends Component {
         {{#each this.items as |item|}}
           <div
             class="bs-nav__group
-              {{if item.current 'bs-nav__group--current'}}"
+              {{if item.current 'bs-nav__group--current'}}
+              {{if (eq item.variant 'button-gold') 'bs-nav__group--button'}}"
           >
             <a
               class="bs-nav__link
-                {{if item.current 'bs-nav__link--current'}}"
+                {{if item.current 'bs-nav__link--current'}}
+                {{if (eq item.variant 'button-gold') 'bs-nav__link--button'}}"
               href={{item.url}}
             >
               <span class="bs-nav__label">{{item.label}}</span>

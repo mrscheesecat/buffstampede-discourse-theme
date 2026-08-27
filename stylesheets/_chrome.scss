@@ -393,6 +393,44 @@ html:not(.bs-docked) .d-header {
       border-bottom: none;
     }
   }
+
+  // ── The gold Support pill on the right edge of the nav row ─────────────
+  // Mirrors the .nav-support-button in components/Nav.jsx: gold background,
+  // black text, sits at the right of the row next to the search icon, hover
+  // step to gold-light. margin-left: auto is what pushes it right; the site
+  // does the same thing with an inline style on its wrapper div.
+  &__group--button {
+    margin-left: auto;
+    padding-left: 12px;
+    align-self: center;
+    border-bottom: none; // no gold underline; the whole thing is gold
+  }
+
+  &__link--button {
+    // Overrides on top of &__link. Site values: 8px 14px, 0.75rem (12px) 700,
+    // 0.08em tracking, 3px radius.
+    padding: 8px 14px;
+    background: $bs-gold;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    transition: background 0.15s;
+
+    // Stated explicitly for :visited too. Discourse colours header anchors
+    // through --header_primary, and a visited link would otherwise drop off
+    // the pill against the gold ground.
+    &,
+    &:visited {
+      color: $bs-black;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: $bs-gold-light;
+      color: $bs-black;
+    }
+  }
 }
 
 // ── The sections inside Discourse's hamburger panel ───────────────────────
