@@ -23,3 +23,18 @@ body.embed-mode {
     display: none;
   }
 }
+
+// The article's own text, imported as the topic's first post, is hidden by
+// Discourse in embed mode with `height: 0; visibility: hidden; position:
+// absolute` (embed-mode.scss, "Hide OP"). Its contents still overflow that
+// zero-height box, so the iframe's reported scrollHeight included the full
+// story, about 3,300px, and the frame grew to its maximum with no replies.
+// Clipping the overflow keeps Discourse's hiding approach (they avoid
+// `display: none` there to prevent jumpy scrolling) while letting the
+// reported height match what readers can actually see.
+body.embed-mode {
+  .post-stream .topic-post.topic-owner:first-child,
+  .nested-view__op {
+    overflow: hidden;
+  }
+}
