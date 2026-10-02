@@ -88,6 +88,27 @@ about 153px tall. Nothing kept those two numbers in agreement, which is why the
 header's contents ended up floating in the middle of the page. It also hid the
 real logo and painted a 24px fake one with a CSS `::before` background image.
 
+## Article comments (embed mode)
+
+Article pages on buffstampede.com show their Story Comments thread in Discourse's
+full-app embed. Discourse opens that iframe with `?embed_mode=true` and puts
+`embed-mode` on the body. `stylesheets/_bs-embed-mode.scss` applies only there:
+
+- **Hides bands 1, 2, 4 and the footer.** Discourse hides its own header in embed
+  mode, but it does not know about this theme's outlets.
+- **Clips the hidden first post.** Discourse hides the imported article text with a
+  zero-height box, but its overflow still counted toward the height the iframe
+  reports, so every frame grew to its maximum.
+- **White background,** matching the article page. The Board keeps off-white.
+
+The Board never has the `embed-mode` class, so none of this changes the forum itself.
+Site-side setup, the soft launch and rollback are documented in the site repo at
+`docs/reader-discussion.md`.
+
+**Name partials with a `bs-` prefix.** This file was first called `_embed.scss`, and
+`@import "../stylesheets/embed"` resolved to Discourse's core classic-embed
+stylesheet instead, pulling its global `header` and `footer` rules into every page.
+
 ## Rules for changing this theme
 
 1. **No literal hex value or font-family string outside `stylesheets/_tokens.scss`.**
@@ -117,6 +138,7 @@ stylesheets/_tokens.scss   the only colours and font stacks in the repo
 stylesheets/_base.scss     Discourse variables, headings, links, buttons
 stylesheets/_chrome.scss   the three header bands and the footer
 stylesheets/_lists.scss    list controls, topic list, categories, topic page
+stylesheets/_bs-embed-mode.scss  article comment embed only
 javascripts/discourse/
   lib/bs-links.js                              parses the pipe-delimited settings
   lib/bs-nav-config.js                         the nav tree, mirroring Nav.jsx
