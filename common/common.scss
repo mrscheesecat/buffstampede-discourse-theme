@@ -30,4 +30,9 @@
 @import "../stylesheets/board-bar";
 @import "../stylesheets/footer";
 @import "../stylesheets/lists";
-@import "../stylesheets/embed";
+@import "../stylesheets/bs-embed-mode";
+//
+// Partial names must not match a Discourse core stylesheet. `embed` did, and
+// `@import "../stylesheets/embed"` resolved to core's classic-embed sheet
+// instead of this theme's file, pulling its global `footer` and `header`
+// rules into every forum page. Prefix theme partials with `bs-` from here on.
