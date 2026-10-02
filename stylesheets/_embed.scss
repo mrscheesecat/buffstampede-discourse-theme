@@ -1,0 +1,25 @@
+// ── Embed mode: Reader discussion on buffstampede.com articles ─────────────
+// Article pages show the forum inside an iframe (Discourse's full-app embed).
+// Discourse opens that iframe with `?embed_mode=true` and marks the body with
+// `embed-mode`, then hides its own header (band 3) itself. Bands 1, 2 and 4
+// and the footer come from this theme's plugin outlets, so Discourse does not
+// know to hide them. Inside an article they would be a second masthead in the
+// middle of the story, and they would also count toward the height the iframe
+// reports to the article, so a thread with no replies would still be tall.
+//
+// Scoped to `body.embed-mode` only. The Board itself never has that class, so
+// nothing here changes the forum when it is opened directly.
+//
+// `display: none` rather than skipping the render in each connector: the flag
+// lives in `discourse/lib/embed-mode`, and rule 4 in common.scss keeps that
+// import out of this theme. No `!important` is needed; none of these elements
+// has a competing Discourse display rule.
+
+body.embed-mode {
+  .bs-topbar,
+  .bs-masthead,
+  .bs-board-bar,
+  .bs-footer {
+    display: none;
+  }
+}
