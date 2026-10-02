@@ -38,3 +38,19 @@ body.embed-mode {
     overflow: hidden;
   }
 }
+
+// White behind the thread so the frame disappears into the article page,
+// which is white. The Board itself stays on the off-white palette colour.
+// `--secondary` is what Discourse paints the page, composer and plain
+// buttons with, so swapping it here keeps those surfaces matched too.
+// `html` needs its own rule because the page background is set there, above
+// the body that carries the `embed-mode` class.
+html:has(> body.embed-mode) {
+  background: $bs-white;
+}
+
+body.embed-mode {
+  --secondary: #{$bs-white};
+  --d-content-background: #{$bs-white};
+  background: $bs-white;
+}
